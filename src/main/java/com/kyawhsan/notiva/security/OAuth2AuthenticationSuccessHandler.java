@@ -44,7 +44,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             return;
         }
 
-        String accessToken = jwtService.generateToken(new CustomUserDetails(user));
+        String accessToken = jwtService.generateAccessToken(new CustomUserDetails(user));
 
         invalidateOAuthSession(request);
 

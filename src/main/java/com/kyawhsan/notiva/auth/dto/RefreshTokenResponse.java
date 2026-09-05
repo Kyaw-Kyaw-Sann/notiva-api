@@ -1,9 +1,8 @@
 package com.kyawhsan.notiva.auth.dto;
 
-public record LoginResponse(
+public record RefreshTokenResponse(
         String accessToken,
         String refreshToken,
         String tokenType,
-        long expiresIn,
-        UserResponse user) {
+        long expiresIn) {
 }

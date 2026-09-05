@@ -184,13 +184,13 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ApiErrorResponse> handleGroqApiException(
                         GroqApiException exception,
                         HttpServletRequest request) {
+                HttpStatus status = HttpStatus.valueOf(exception.getStatus());
                 ApiErrorResponse response = new ApiErrorResponse(false,
-                                HttpStatus.SERVICE_UNAVAILABLE.value(),
-                                HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase(),
+                                status.value(), status.getReasonPhrase(),
                                 exception.getMessage(), request.getRequestURI(), null,
                                 LocalDateTime.now());
 
-                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+                return ResponseEntity.status(status).body(response);
         }
 
         @ExceptionHandler(AiUsageLimitException.class)

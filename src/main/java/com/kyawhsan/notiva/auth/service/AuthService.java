@@ -30,6 +30,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import com.kyawhsan.notiva.auth.dto.ForgotPasswordRequest;
 import com.kyawhsan.notiva.auth.dto.ResetPasswordRequest;
 import com.kyawhsan.notiva.auth.dto.VerifyResetOtpRequest;
+import com.kyawhsan.notiva.auth.dto.RefreshTokenRequest;
+import com.kyawhsan.notiva.auth.dto.RefreshTokenResponse;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -52,6 +54,9 @@ public class AuthService {
 
     @Value("${app.auth.password-reset-otp-expiration-minutes}")
     private long passwordResetOtpExpirationMinutes;
+
+    @Value("${app.jwt.refresh-expiration}")
+    private long refreshExpirationMillis;
 
     @Transactional
     public RegisterResponse register(
@@ -125,6 +130,7 @@ public class AuthService {
         authTokenRepository.save(authToken);
     }
 
+    @Transactional
     public LoginResponse login(
             LoginRequest request) {
         String normalizedEmail = normalizeEmail(request.email());
@@ -150,10 +156,41 @@ public class AuthService {
         }
 
         String accessToken = jwtService
-                .generateToken(new com.kyawhsan.notiva.security.CustomUserDetails(user));
+                .generateAccessToken(new com.kyawhsan.notiva.security.CustomUserDetails(user));
+        String refreshToken = issueRefreshToken(user);
 
-        return new LoginResponse(accessToken, "Bearer", jwtService.getExpiration() / 1000,
+        return new LoginResponse(accessToken, refreshToken, "Bearer", jwtService.getExpiration() / 1000,
                 UserResponse.from(user));
+    }
+
+    @Transactional
+    public RefreshTokenResponse refresh(
+            RefreshTokenRequest request) {
+        AuthToken storedToken = authTokenRepository
+                .findByTokenAndType(tokenUtil.hash(request.refreshToken()), AuthTokenType.REFRESH_TOKEN)
+                .orElseThrow(() -> new UnauthorizedException("Refresh token is invalid, expired, or revoked"));
+
+        if (!storedToken.isValid() || !storedToken.getUser().isEnabled()) {
+            throw new UnauthorizedException("Refresh token is invalid, expired, or revoked");
+        }
+
+        storedToken.markAsUsed();
+        authTokenRepository.save(storedToken);
+
+        User user = storedToken.getUser();
+        String accessToken = jwtService.generateAccessToken(
+                new com.kyawhsan.notiva.security.CustomUserDetails(user));
+        String refreshToken = issueRefreshToken(user);
+
+        return new RefreshTokenResponse(accessToken, refreshToken, "Bearer",
+                jwtService.getExpiration() / 1000);
+    }
+
+    @Transactional
+    public void logout(
+            RefreshTokenRequest request) {
+        authTokenRepository.findByTokenAndType(tokenUtil.hash(request.refreshToken()),
+                AuthTokenType.REFRESH_TOKEN).ifPresent(AuthToken::markAsUsed);
     }
 
     @Transactional
@@ -253,5 +290,21 @@ public class AuthService {
     private String normalizeEmail(
             String email) {
         return email.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private String issueRefreshToken(
+            User user) {
+        String rawToken = tokenUtil.generateVerificationToken();
+
+        AuthToken authToken = new AuthToken();
+        authToken.setToken(tokenUtil.hash(rawToken));
+        authToken.setType(AuthTokenType.REFRESH_TOKEN);
+        authToken.setExpiresAt(LocalDateTime.now().plusSeconds(refreshExpirationMillis / 1000));
+        authToken.setUsed(false);
+        authToken.setUser(user);
+
+        authTokenRepository.save(authToken);
+
+        return rawToken;
     }
 }
