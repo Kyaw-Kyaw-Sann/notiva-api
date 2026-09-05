@@ -1,7 +1,7 @@
 package com.kyawhsan.notiva.security;
 
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.enums.Role;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.user.enums.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

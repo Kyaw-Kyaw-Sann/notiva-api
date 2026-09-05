@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.note.dto;
 
-import com.kyawhsan.notiva.entity.NoteVersion;
+import com.kyawhsan.notiva.note.entity.NoteVersion;
 
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.dto;
 
-import com.kyawhsan.notiva.enums.MessageRole;
+import com.kyawhsan.notiva.ai.enums.MessageRole;
 
 import java.time.LocalDateTime;
 

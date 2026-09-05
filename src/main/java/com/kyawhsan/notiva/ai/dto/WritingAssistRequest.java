@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.dto;
 
-import com.kyawhsan.notiva.enums.WritingAction;
+import com.kyawhsan.notiva.ai.enums.WritingAction;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 

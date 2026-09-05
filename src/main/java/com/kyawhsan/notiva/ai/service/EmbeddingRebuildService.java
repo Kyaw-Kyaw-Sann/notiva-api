@@ -1,12 +1,12 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import com.kyawhsan.notiva.ai.dto.EmbeddingRebuildResponse;
-import com.kyawhsan.notiva.entity.Note;
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.repository.NoteChunkJdbcRepository;
-import com.kyawhsan.notiva.repository.NoteRepository;
+import com.kyawhsan.notiva.note.entity.Note;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.ai.repository.NoteChunkJdbcRepository;
+import com.kyawhsan.notiva.note.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

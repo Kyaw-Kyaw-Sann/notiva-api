@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.dto;
 
-import com.kyawhsan.notiva.enums.UserPlan;
+import com.kyawhsan.notiva.user.enums.UserPlan;
 
 import java.time.LocalDate;
 

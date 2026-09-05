@@ -2,7 +2,7 @@ package com.kyawhsan.notiva.note.controller;
 
 import com.kyawhsan.notiva.common.response.ApiResponse;
 import com.kyawhsan.notiva.note.dto.DeleteImageRequest;
-import com.kyawhsan.notiva.dto.ImageUploadResponse;
+import com.kyawhsan.notiva.common.response.ImageUploadResponse;
 import com.kyawhsan.notiva.note.service.NoteImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

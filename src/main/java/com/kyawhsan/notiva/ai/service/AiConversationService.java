@@ -1,19 +1,19 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import com.kyawhsan.notiva.ai.dto.ConversationNoteResponse;
 import com.kyawhsan.notiva.ai.dto.ConversationResponse;
 import com.kyawhsan.notiva.ai.dto.CreateConversationRequest;
 import com.kyawhsan.notiva.ai.dto.UpdateConversationRequest;
-import com.kyawhsan.notiva.entity.AiConversation;
-import com.kyawhsan.notiva.entity.Note;
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.enums.ConversationType;
+import com.kyawhsan.notiva.ai.entity.AiConversation;
+import com.kyawhsan.notiva.note.entity.Note;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.ai.enums.ConversationType;
 import com.kyawhsan.notiva.common.exception.ResourceNotFoundException;
-import com.kyawhsan.notiva.repository.AiConversationRepository;
-import com.kyawhsan.notiva.repository.AiMessageRepository;
-import com.kyawhsan.notiva.repository.NoteRepository;
+import com.kyawhsan.notiva.ai.repository.AiConversationRepository;
+import com.kyawhsan.notiva.ai.repository.AiMessageRepository;
+import com.kyawhsan.notiva.note.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

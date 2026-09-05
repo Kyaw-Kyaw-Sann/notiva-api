@@ -1,8 +1,8 @@
 package com.kyawhsan.notiva.auth.entity;
 
 import com.kyawhsan.notiva.auth.enums.AuthTokenType;
-import com.kyawhsan.notiva.entity.CreatedAtEntity;
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.common.persistence.CreatedAtEntity;
+import com.kyawhsan.notiva.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

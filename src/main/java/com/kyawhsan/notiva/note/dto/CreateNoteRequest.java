@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.note.dto;
 
-import com.kyawhsan.notiva.enums.NoteBackgroundColor;
+import com.kyawhsan.notiva.note.enums.NoteBackgroundColor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

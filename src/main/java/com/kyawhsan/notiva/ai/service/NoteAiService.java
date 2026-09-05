@@ -1,28 +1,28 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import com.kyawhsan.notiva.ai.dto.AiUsageResponse;
 import com.kyawhsan.notiva.ai.dto.GenerateTitleResponse;
 import com.kyawhsan.notiva.ai.dto.GroqGenerationResult;
 import com.kyawhsan.notiva.ai.client.GroqClient;
-import com.kyawhsan.notiva.entity.Note;
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.note.entity.Note;
+import com.kyawhsan.notiva.user.entity.User;
 import com.kyawhsan.notiva.common.exception.BadRequestException;
 import com.kyawhsan.notiva.common.exception.ResourceNotFoundException;
-import com.kyawhsan.notiva.repository.NoteRepository;
+import com.kyawhsan.notiva.note.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.kyawhsan.notiva.ai.dto.NoteSummaryResponse;
 import com.kyawhsan.notiva.ai.dto.SummarizeNoteRequest;
-import com.kyawhsan.notiva.enums.SummaryLength;
+import com.kyawhsan.notiva.ai.enums.SummaryLength;
 import com.kyawhsan.notiva.ai.dto.WritingAssistRequest;
 import com.kyawhsan.notiva.ai.dto.WritingAssistResponse;
-import com.kyawhsan.notiva.enums.WritingAction;
+import com.kyawhsan.notiva.ai.enums.WritingAction;
 import com.kyawhsan.notiva.ai.dto.CategorySuggestionResponse;
 import com.kyawhsan.notiva.note.dto.CategorySummaryResponse;
-import com.kyawhsan.notiva.entity.Category;
-import com.kyawhsan.notiva.repository.CategoryRepository;
+import com.kyawhsan.notiva.note.entity.Category;
+import com.kyawhsan.notiva.note.repository.CategoryRepository;
 
 import java.util.List;
 
