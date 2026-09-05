@@ -1,7 +1,7 @@
 package com.kyawhsan.notiva.note.dto;
 
-import com.kyawhsan.notiva.enums.NoteBackgroundColor;
-import com.kyawhsan.notiva.enums.NoteSort;
+import com.kyawhsan.notiva.note.enums.NoteBackgroundColor;
+import com.kyawhsan.notiva.note.enums.NoteSort;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;

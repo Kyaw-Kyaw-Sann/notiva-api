@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.dto;
 
-import com.kyawhsan.notiva.enums.ConversationType;
+import com.kyawhsan.notiva.ai.enums.ConversationType;
 
 import java.time.LocalDateTime;
 

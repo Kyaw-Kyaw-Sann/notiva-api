@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.security;
 
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.user.entity.User;
 import com.kyawhsan.notiva.auth.service.GoogleOAuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

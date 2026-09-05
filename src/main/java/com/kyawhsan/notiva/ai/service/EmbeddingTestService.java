@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.PgVectorService;
+import com.kyawhsan.notiva.common.persistence.PgVectorService;
 
 import com.kyawhsan.notiva.ai.dto.EmbeddingResult;
 import com.kyawhsan.notiva.ai.dto.EmbeddingTestRequest;

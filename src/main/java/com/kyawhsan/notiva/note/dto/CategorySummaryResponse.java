@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.note.dto;
 
-import com.kyawhsan.notiva.entity.Category;
+import com.kyawhsan.notiva.note.entity.Category;
 
 public record CategorySummaryResponse(
         Long id,

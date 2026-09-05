@@ -1,7 +1,7 @@
 package com.kyawhsan.notiva.note.dto;
 
-import com.kyawhsan.notiva.entity.Note;
-import com.kyawhsan.notiva.enums.NoteBackgroundColor;
+import com.kyawhsan.notiva.note.entity.Note;
+import com.kyawhsan.notiva.note.enums.NoteBackgroundColor;
 
 import java.time.LocalDateTime;
 

@@ -1,10 +1,10 @@
 package com.kyawhsan.notiva.auth.service;
 
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.enums.Role;
-import com.kyawhsan.notiva.enums.UserPlan;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.user.enums.Role;
+import com.kyawhsan.notiva.user.enums.UserPlan;
 import com.kyawhsan.notiva.common.exception.BadRequestException;
-import com.kyawhsan.notiva.repository.UserRepository;
+import com.kyawhsan.notiva.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

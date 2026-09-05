@@ -4,32 +4,29 @@
 
 - `auth/` owns authentication controllers, services, token DTOs, and persisted
   authentication tokens.
-- `user/` owns profile, avatar, password-change, and account-deletion API
-  workflows.
-- `note/` owns note, category, image, version, and search API workflows.
+- `user/` owns user entities/repositories, profile, avatar, password-change,
+  and account-deletion workflows.
+- `note/` owns note/category/version entities and repositories plus note,
+  category, image, version, and search API workflows.
 - `ai/` owns AI controllers, provider clients, AI DTOs, conversation/chat,
-  semantic-search, and embedding application services.
+  semantic-search, embedding services, and AI persistence.
 - `common/` owns shared API responses, exceptions, health endpoint, and
-  utilities.
-- `security/` owns Spring Security and JWT implementation.
+  utilities as well as shared persistence bases and storage integrations.
+- `security/` owns Spring Security, JWT implementation, and authenticated-user
+  resolution.
 - `config/` owns application and provider configuration.
 
 Controllers use request/response DTOs and delegate to services. Repositories
 remain persistence-only; entities are not returned directly from controllers.
 
-## Intentionally shared or legacy persistence types
-
-The following types remain outside feature packages because moving them would
-create broad cross-feature import changes without improving an API boundary:
+## Shared infrastructure
 
 | Area | Types | Reason |
 | --- | --- | --- |
-| Shared security context | `CurrentUserService` | Used by auth, user, note, and AI services to obtain the authenticated user. |
-| Shared media | `CloudinaryService`, `ImageUploadResponse` | Used by both user-avatar and note-image workflows. |
-| pgvector support | `PgVectorService` | Shared database infrastructure used by the embedding test workflow. |
-| Core persistence | `User`, `Note`, `Category`, `NoteVersion` and their repositories | JPA relationships and account/note deletion workflows span auth, user, note, and AI features. |
-| AI persistence | `AiConversation`, `AiMessage`, `AiUsage` and their repositories | Note deletion and user deletion must delete conversations, messages, and usage data in a defined order. |
-| Note chunk persistence | `NoteChunkJdbcRepository`, `NoteSpecifications` | Semantic search and embedding cleanup require direct persistence access while preserving user ownership filtering. |
+| Security context | `security/CurrentUserService` | Used by auth, user, note, and AI services to obtain the authenticated user. |
+| Shared media | `common/storage/CloudinaryService`, `common/response/ImageUploadResponse` | Used by both user-avatar and note-image workflows. |
+| Persistence base | `common/persistence/BaseEntity`, `CreatedAtEntity` | Shared JPA timestamp bases without feature-specific behavior. |
+| pgvector support | `common/persistence/PgVectorService` | Database infrastructure used by the embedding test workflow. |
 
 ## Critical cross-feature dependencies
 
@@ -45,6 +42,6 @@ create broad cross-feature import changes without improving an API boundary:
 - Semantic search filters both `note_chunks.user_id` and `notes.user_id`
   with the authenticated user ID and excludes soft-deleted notes.
 
-These dependencies are intentional maintenance boundaries. Any future
-repository/entity package migration must preserve them and be verified with
-deletion and ownership tests.
+Cross-feature imports between these feature-owned entities and repositories are
+intentional. Future changes must preserve these cleanup and ownership rules and
+be verified with deletion and authorization tests.

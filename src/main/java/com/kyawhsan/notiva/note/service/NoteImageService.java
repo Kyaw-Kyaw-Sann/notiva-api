@@ -1,11 +1,11 @@
 package com.kyawhsan.notiva.note.service;
 
-import com.kyawhsan.notiva.dto.ImageUploadResponse;
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.common.response.ImageUploadResponse;
+import com.kyawhsan.notiva.user.entity.User;
 import com.kyawhsan.notiva.common.exception.BadRequestException;
 import com.kyawhsan.notiva.common.util.ImageValidator;
-import com.kyawhsan.notiva.service.CloudinaryService;
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.common.storage.CloudinaryService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,13 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import com.kyawhsan.notiva.ai.dto.AiGenerateRequest;
 import com.kyawhsan.notiva.ai.dto.AiGenerateResponse;
 import com.kyawhsan.notiva.ai.dto.AiUsageResponse;
 import com.kyawhsan.notiva.ai.dto.GroqGenerationResult;
 import com.kyawhsan.notiva.ai.client.GroqClient;
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

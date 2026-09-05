@@ -2,8 +2,8 @@ package com.kyawhsan.notiva.ai.service;
 
 import com.kyawhsan.notiva.ai.dto.EmbeddingBatchResult;
 import com.kyawhsan.notiva.ai.dto.NoteChunkData;
-import com.kyawhsan.notiva.entity.Note;
-import com.kyawhsan.notiva.repository.NoteChunkJdbcRepository;
+import com.kyawhsan.notiva.note.entity.Note;
+import com.kyawhsan.notiva.ai.repository.NoteChunkJdbcRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

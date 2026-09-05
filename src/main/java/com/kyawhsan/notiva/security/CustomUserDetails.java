@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.security;
 
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.user.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

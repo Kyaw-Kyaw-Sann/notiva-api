@@ -2,13 +2,13 @@ package com.kyawhsan.notiva.note.service;
 
 import com.kyawhsan.notiva.note.dto.CategoryRequest;
 import com.kyawhsan.notiva.note.dto.CategoryResponse;
-import com.kyawhsan.notiva.entity.Category;
-import com.kyawhsan.notiva.entity.User;
+import com.kyawhsan.notiva.note.entity.Category;
+import com.kyawhsan.notiva.user.entity.User;
 import com.kyawhsan.notiva.common.exception.ConflictException;
 import com.kyawhsan.notiva.common.exception.ResourceNotFoundException;
-import com.kyawhsan.notiva.repository.CategoryRepository;
-import com.kyawhsan.notiva.repository.NoteRepository;
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.note.repository.CategoryRepository;
+import com.kyawhsan.notiva.note.repository.NoteRepository;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

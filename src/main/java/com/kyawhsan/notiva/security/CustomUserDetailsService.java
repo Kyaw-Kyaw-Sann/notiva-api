@@ -1,7 +1,7 @@
 package com.kyawhsan.notiva.security;
 
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.repository.UserRepository;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

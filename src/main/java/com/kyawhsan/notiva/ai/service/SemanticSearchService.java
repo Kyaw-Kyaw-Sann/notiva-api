@@ -1,13 +1,13 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import com.kyawhsan.notiva.ai.dto.EmbeddingResult;
 import com.kyawhsan.notiva.ai.dto.SemanticSearchRequest;
 import com.kyawhsan.notiva.ai.dto.SemanticSearchResponse;
 import com.kyawhsan.notiva.ai.dto.SemanticSearchResult;
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.repository.NoteChunkJdbcRepository;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.ai.repository.NoteChunkJdbcRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

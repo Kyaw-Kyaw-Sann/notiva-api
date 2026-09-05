@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.dto;
 
-import com.kyawhsan.notiva.enums.SummaryLength;
+import com.kyawhsan.notiva.ai.enums.SummaryLength;
 import jakarta.validation.constraints.NotNull;
 
 public record SummarizeNoteRequest(

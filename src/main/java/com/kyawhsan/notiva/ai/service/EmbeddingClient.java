@@ -6,7 +6,7 @@ import com.kyawhsan.notiva.ai.dto.VoyageEmbeddingData;
 import com.kyawhsan.notiva.ai.dto.VoyageEmbeddingRequest;
 import com.kyawhsan.notiva.ai.dto.VoyageEmbeddingResponse;
 import com.kyawhsan.notiva.ai.dto.VoyageEmbeddingUsage;
-import com.kyawhsan.notiva.enums.EmbeddingInputType;
+import com.kyawhsan.notiva.ai.enums.EmbeddingInputType;
 import com.kyawhsan.notiva.common.exception.EmbeddingApiException;
 import com.kyawhsan.notiva.common.exception.EmbeddingTimeoutException;
 import org.springframework.beans.factory.annotation.Qualifier;

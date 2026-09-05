@@ -1,6 +1,6 @@
 package com.kyawhsan.notiva.ai.service;
 
-import com.kyawhsan.notiva.service.CurrentUserService;
+import com.kyawhsan.notiva.security.CurrentUserService;
 
 import com.kyawhsan.notiva.ai.dto.AiMessageResponse;
 import com.kyawhsan.notiva.ai.dto.AiUsageResponse;
@@ -12,16 +12,16 @@ import com.kyawhsan.notiva.ai.dto.SemanticSearchRequest;
 import com.kyawhsan.notiva.ai.dto.SemanticSearchResponse;
 import com.kyawhsan.notiva.ai.dto.SemanticSearchResult;
 import com.kyawhsan.notiva.ai.dto.SendChatMessageRequest;
-import com.kyawhsan.notiva.entity.AiConversation;
-import com.kyawhsan.notiva.entity.AiMessage;
-import com.kyawhsan.notiva.entity.Note;
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.enums.ConversationType;
-import com.kyawhsan.notiva.enums.MessageRole;
+import com.kyawhsan.notiva.ai.entity.AiConversation;
+import com.kyawhsan.notiva.ai.entity.AiMessage;
+import com.kyawhsan.notiva.note.entity.Note;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.ai.enums.ConversationType;
+import com.kyawhsan.notiva.ai.enums.MessageRole;
 import com.kyawhsan.notiva.common.exception.BadRequestException;
 import com.kyawhsan.notiva.common.exception.ResourceNotFoundException;
-import com.kyawhsan.notiva.repository.AiConversationRepository;
-import com.kyawhsan.notiva.repository.AiMessageRepository;
+import com.kyawhsan.notiva.ai.repository.AiConversationRepository;
+import com.kyawhsan.notiva.ai.repository.AiMessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

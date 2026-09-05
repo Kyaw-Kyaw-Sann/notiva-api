@@ -1,8 +1,8 @@
 package com.kyawhsan.notiva.admin.dto;
 
-import com.kyawhsan.notiva.entity.User;
-import com.kyawhsan.notiva.enums.Role;
-import com.kyawhsan.notiva.enums.UserPlan;
+import com.kyawhsan.notiva.user.entity.User;
+import com.kyawhsan.notiva.user.enums.Role;
+import com.kyawhsan.notiva.user.enums.UserPlan;
 import java.time.LocalDateTime;
 
 public record AdminUserResponse(Long id, String email, String displayName, String avatarUrl,
