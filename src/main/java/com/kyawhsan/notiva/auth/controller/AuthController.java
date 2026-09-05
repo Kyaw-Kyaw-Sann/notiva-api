@@ -15,6 +15,8 @@ import com.kyawhsan.notiva.auth.dto.UserResponse;
 import com.kyawhsan.notiva.auth.dto.ForgotPasswordRequest;
 import com.kyawhsan.notiva.auth.dto.ResetPasswordRequest;
 import com.kyawhsan.notiva.auth.dto.VerifyResetOtpRequest;
+import com.kyawhsan.notiva.auth.dto.RefreshTokenRequest;
+import com.kyawhsan.notiva.auth.dto.RefreshTokenResponse;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -51,6 +53,21 @@ public class AuthController {
         LoginResponse response = authService.login(request);
 
         return ResponseEntity.ok(ApiResponse.success("Login successful", response));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<RefreshTokenResponse>> refresh(
+            @Valid @RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(ApiResponse.success("Token refreshed successfully",
+                authService.refresh(request)));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(
+            @Valid @RequestBody RefreshTokenRequest request) {
+        authService.logout(request);
+
+        return ResponseEntity.ok(ApiResponse.success("Logged out successfully"));
     }
 
     @GetMapping("/me")

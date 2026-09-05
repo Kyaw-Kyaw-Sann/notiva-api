@@ -14,6 +14,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
+    private static final String ACCESS_TOKEN_TYPE = "ACCESS";
+
     private final SecretKey signingKey;
     private final long expiration;
 
@@ -26,12 +28,13 @@ public class JwtService {
         this.expiration = expiration;
     }
 
-    public String generateToken(
+    public String generateAccessToken(
             UserDetails userDetails) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
-        return Jwts.builder().subject(userDetails.getUsername()).issuedAt(now)
+        return Jwts.builder().subject(userDetails.getUsername())
+                .claim("token_type", ACCESS_TOKEN_TYPE).issuedAt(now)
                 .expiration(expiryDate).signWith(signingKey).compact();
     }
 
@@ -45,7 +48,8 @@ public class JwtService {
             UserDetails userDetails) {
         String email = extractEmail(token);
 
-        return email.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token)
+        return ACCESS_TOKEN_TYPE.equals(extractAllClaims(token).get("token_type", String.class))
+                && email.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token)
                 && userDetails.isEnabled();
     }
 

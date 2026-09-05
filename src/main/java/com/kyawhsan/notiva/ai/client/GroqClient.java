@@ -16,12 +16,16 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.SocketTimeoutException;
 import java.util.List;
 
 @Service
 public class GroqClient {
+
+    private static final Logger log = LoggerFactory.getLogger(GroqClient.class);
 
     private static final String CHAT_COMPLETIONS_PATH = "/chat/completions";
 
@@ -79,6 +83,8 @@ public class GroqClient {
             throw createResponseException(exception);
 
         } catch (RestClientException exception) {
+            log.warn("Groq request failed before a provider response: {}",
+                    exception.getClass().getSimpleName());
             throw new GroqApiException("Unable to communicate with Groq", exception);
         }
     }
@@ -86,14 +92,14 @@ public class GroqClient {
     private GroqGenerationResult mapResponse(
             GroqChatResponse response) {
         if (response == null || response.choices() == null || response.choices().isEmpty()) {
-            throw new GroqApiException("Groq returned an empty response");
+            throw new GroqApiException("Groq returned an invalid response", 502, null);
         }
 
         GroqChoice firstChoice = response.choices().getFirst();
 
         if (firstChoice.message() == null || firstChoice.message().content() == null
                 || firstChoice.message().content().isBlank()) {
-            throw new GroqApiException("Groq returned empty response content");
+            throw new GroqApiException("Groq returned an invalid response", 502, null);
         }
 
         GroqUsage usage = response.usage();
@@ -112,34 +118,32 @@ public class GroqClient {
             return new GroqTimeoutException("Groq request timed out", exception);
         }
 
+        log.warn("Unable to reach Groq service: {}", rootCause.getClass().getSimpleName());
         return new GroqApiException("Unable to reach Groq service", exception);
     }
 
     private GroqApiException createResponseException(
             RestClientResponseException exception) {
         int status = exception.getStatusCode().value();
+        log.warn("Groq provider returned HTTP status {}", status);
 
-        if (status == 401) {
-            return new GroqApiException("Groq API key is invalid or unauthorized", exception);
-        }
-
-        if (status == 403) {
-            return new GroqApiException("Groq API access is forbidden", exception);
+        if (status == 401 || status == 403) {
+            return new GroqApiException("AI provider authentication is unavailable", 503, exception);
         }
 
         if (status == 429) {
-            return new GroqApiException("Groq provider rate limit reached", exception);
+            return new GroqApiException("Groq provider rate limit reached", 429, exception);
         }
 
-        if (status == 400) {
-            return new GroqApiException("Groq rejected the AI request", exception);
+        if (status == 400 || status == 404 || status == 422) {
+            return new GroqApiException("Groq rejected the AI request", 502, exception);
         }
 
         if (status >= 500) {
-            return new GroqApiException("Groq service is temporarily unavailable", exception);
+            return new GroqApiException("Groq service is temporarily unavailable", 503, exception);
         }
 
-        return new GroqApiException("Unable to complete the Groq request", exception);
+        return new GroqApiException("Unable to complete the Groq request", 502, exception);
     }
 
     private void validateConfiguration() {

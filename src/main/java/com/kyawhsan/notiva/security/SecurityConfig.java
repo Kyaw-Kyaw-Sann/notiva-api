@@ -72,10 +72,12 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
 
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/health", "/api/auth/register",
                                 "/api/auth/verify-email", "/api/auth/login",
                                 "/api/auth/forgot-password", "/api/auth/verify-reset-otp",
-                                "/api/auth/reset-password", "/oauth2/**", "/login/oauth2/**")
+                                "/api/auth/reset-password", "/api/auth/refresh",
+                                "/api/auth/logout", "/oauth2/**", "/login/oauth2/**")
                         .permitAll().anyRequest().authenticated())
 
                 .oauth2Login(oauth2 -> oauth2.successHandler(oauth2SuccessHandler)
