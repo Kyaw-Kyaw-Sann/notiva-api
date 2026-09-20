@@ -103,7 +103,7 @@ For Neon, use its connection details in JDBC format. If Neon provides a URI begi
 jdbc:postgresql://<neon-host>/<database>?sslmode=require
 ```
 
-Generate a strong Base64 value for `JWT_SECRET`; do not reuse the example below in production:
+Generate a strong Base64 value for `JWT_SECRET`; do not reuse the example below outside local development:
 
 ```powershell
 [Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }))
@@ -115,23 +115,13 @@ The full variable-name reference is in [`.env.example`](.env.example).
 
 ### Existing development database
 
-The default local configuration uses `JPA_DDL_AUTO=update` and keeps Flyway disabled. This preserves the existing development workflow, but it is not suitable for production.
+The default local configuration uses `JPA_DDL_AUTO=update` and keeps Flyway disabled. This preserves the existing development workflow.
 
 ### Fresh database
 
 The initial Flyway migration creates the full schema and requires `pgvector` because note embeddings use `vector(512)`. Use a PostgreSQL server where the `vector` extension is available.
 
-For a fresh production-style database, use the `prod` profile. Flyway applies `V1__initial_schema.sql` automatically and Hibernate validates rather than modifies the schema.
-
-### Existing non-empty database
-
-Before the first production deployment, create a provider backup or a Neon branch. Then set the following value for **one deployment only**:
-
-```text
-FLYWAY_BASELINE_ON_MIGRATE=true
-```
-
-This adds version `1` to `flyway_schema_history` without re-running V1 against existing data. After it succeeds, set it back to `false` and redeploy.
+The migration is [V1__initial_schema.sql](src/main/resources/db/migration/V1__initial_schema.sql). Review it before applying it to a database that already contains data.
 
 ## Run locally
 
@@ -193,44 +183,14 @@ Content-Type: application/json
 
 Start with the authentication endpoints in [API_DOCUMENTATION.md](API_DOCUMENTATION.md), then use the returned access token for user, note, AI, and admin APIs. Refresh tokens are only for `/api/auth/refresh` and `/api/auth/logout`; never use them as Bearer tokens.
 
-## Railway + Neon deployment
-
-This project can deploy from GitHub to Railway without Docker Desktop.
-
-1. Push the `master` branch to GitHub.
-2. In Railway, create a service from the GitHub repository and select the `master` branch.
-3. Set `SPRING_PROFILES_ACTIVE=prod`.
-4. Add all required values from `.env.example` as Railway Variables. Store real values only in Railway, never in Git.
-5. Set `FLYWAY_BASELINE_ON_MIGRATE=true` only for the first deployment to an existing Neon database after creating a backup/branch.
-6. Configure Railway Healthcheck Path as `/api/health`.
-7. Generate a Railway public domain and verify `https://<your-domain>/api/health` returns `200`.
-8. Set `FLYWAY_BASELINE_ON_MIGRATE=false` and redeploy after baseline success.
-
-After a public backend domain exists, update these variables:
-
-```text
-BACKEND_URL=https://<your-railway-domain>
-FRONTEND_URL=https://<your-frontend-domain>
-OAUTH2_FRONTEND_CALLBACK_URL=https://<your-frontend-domain>/oauth2/callback
-```
-
-Google Cloud Console must also allow this backend OAuth redirect URI:
-
-```text
-https://<your-railway-domain>/login/oauth2/code/google
-```
-
-`FRONTEND_URL` must exactly match the browser frontend origin. The current CORS configuration permits one frontend origin.
-
 ## Troubleshooting
 
 | Symptom | Check |
 | --- | --- |
 | Application cannot connect to PostgreSQL | Verify `DATABASE_URL`, username, password, network access, and `sslmode=require` for Neon. |
-| Flyway refuses a non-empty database | Restore/confirm a backup, use `FLYWAY_BASELINE_ON_MIGRATE=true` once, then set it back to `false`. |
 | AI endpoint fails | Verify the relevant Groq or Voyage key, model, provider availability, and server logs without exposing keys. |
-| Google OAuth fails after deployment | Verify the registered redirect URI uses the exact Railway HTTPS domain. |
-| Browser frontend gets a CORS error | Set `FRONTEND_URL` to the exact frontend origin and restart/redeploy. |
+| Google OAuth fails | Verify the registered redirect URI and Google client credentials match the active environment. |
+| Browser frontend gets a CORS error | Set `FRONTEND_URL` to the exact frontend origin and restart the application. |
 | `401 Unauthorized` on a private API | Send a valid access token with `Authorization: Bearer <access-token>`. |
 | `403 Forbidden` on an admin API | Sign in using an account with the `ADMIN` role. |
 
@@ -239,7 +199,7 @@ https://<your-railway-domain>/login/oauth2/code/google
 - Never commit `.env`, database credentials, API keys, JWT secrets, access tokens, or refresh tokens.
 - Do not log passwords, authorization headers, private note content, or provider secrets.
 - Rotate any credential that was accidentally committed, shared, or exposed in logs.
-- Keep production schema changes in Flyway migrations; production uses Hibernate validation rather than schema updates.
+- Keep schema changes in reviewed Flyway migrations rather than relying on automatic updates.
 
 ## Contributing workflow
 
