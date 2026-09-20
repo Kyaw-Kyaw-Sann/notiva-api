@@ -32,4 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 
+# Local environment files may contain database credentials, API keys, and JWT secrets.
 .env
+.env.*
+!.env.example
+
+# Runtime logs and JVM crash reports are machine-specific and may contain request details.
+*.log
+hs_err_pid*.log
